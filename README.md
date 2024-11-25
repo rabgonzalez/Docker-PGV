@@ -9,7 +9,8 @@
     - [Paso 2](#paso-2)
 
 ### Paso 1
-> [!TIP] sudo docker run hello-world
+> [!TIP] 
+> sudo docker run hello-world
 ```bash
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
