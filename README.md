@@ -9,8 +9,7 @@
     - [Paso 2](#paso-2)
 
 ### Paso 1
-> [!TIP] Comando
-> sudo docker run hello-world
+> [!TIP] sudo docker run hello-world
 ```bash
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -41,27 +40,27 @@ For more examples and ideas, visit:
 ```
 
 ### Paso 2
-> [!TIP] Comando
+> [!TIP] 
 > sudo docker ps
 ```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 ---
-> [!TIP] Comando
+> [!TIP] 
 > docker ps -a
 ```bash
 CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
 65ad0ce82e23   hello-world   "/hello"   10 minutes ago   Exited (0) 10 minutes ago             strange_banach
 ```
 ---
-> [!TIP] Comando
+>[!TIP] 
 > sudo docker ps -l
 ```bash
 CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
 65ad0ce82e23   hello-world   "/hello"   15 minutes ago   Exited (0) 14 minutes ago             strange_banach
 ```
 ---
-> [!TIP] Comando
+> [!TIP] 
 > sudo docker images
 ```bash
 REPOSITORY               TAG                 IMAGE ID       CREATED         SIZE
