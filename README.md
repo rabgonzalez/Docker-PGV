@@ -14,6 +14,10 @@
     - [Paso 3](#paso-3)
     - [Paso 4](#paso-4)
     - [Paso 5](#paso-5)
+    - [Reto Adicional](#reto-adicional)
+      - [Cambiar de puerto](#cambiar-de-puerto)
+      - [Crear un volumen](#crear-un-volumen)
+  - [Tarea 3](#tarea-3)
 
 ## tarea 1
 ### Paso 1
@@ -194,3 +198,101 @@ Deleted: sha256:0269bb8ab7750b1ccbbcee578df3af6edcba46c367891e319e3b874366c91b2e
 Deleted: sha256:5ff949a6a98fa0b9294d5feab73bc2bd31947ecdf546d426d49401a5a5d8b9f4
 Deleted: sha256:5e4268f1622d7392ab023aa0c458ee836bda8833e0b0f9d6b3333fff071bb761
 ```
+
+### Reto Adicional
+#### Cambiar de puerto
+Para ejecutar la imagen en otro puerto, basta con cambiar el puerto del anfitrión en el comando 
+> [!TIP]
+> docker run -d -p 8888:8080 --name tomcat-server tomcat
+
+#### Crear un volumen
+> [!IMPORTANT]
+> Un volumen de docker se utiliza para poder conservar la información de un contenedor, aqunque este sea eliminado.
+> Esto nos permite transferir la información de un contenedor a otro e intercambiar datos entre varios contenedores
+
+> [!TIP]
+> sudo docker volume create --name tomcat-volume
+
+Creamos un volumen con el nombre <i>**tomcat-volume**</i>
+```bash
+tomcat-volume
+```
+---
+
+> [!TIP]
+> docker run -d -p 9000:8080 -v tomcat-volume:/data --name tomcat-server tomcat
+```bash
+37dda271e541a0ecb55bd8db91b676be396a72d6d21f9181184f7a2d05e5e5a0
+```
+---
+> [!TIP]
+> sudo docker volume ls
+
+Lista los volumenes registrados.
+```bash
+DRIVER    VOLUME NAME
+local     tomcat-volume
+```
+---
+> [!TIP]
+> sudo docker volume inpect tomcat-volume
+
+Proporciona información acerca del volumen
+```bash
+[
+    {
+        "CreatedAt": "2024-11-26T22:43:10Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/snap/docker/common/var-lib-docker/volumes/tomcat-volume/_data",
+        "Name": "tomcat-volume",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+```
+---
+> [!TIP]
+> sudo docker stop tomcat-server
+>
+> sudo docker rm tomcat-server
+
+Primero tenemos que detener y eliminar el contenedor que está utilizando el volumen
+
+---
+> [!TIP]
+> sudo docker volume rm tomcat-volume
+
+Por último, eliminamos el volumen
+
+## Tarea 3
+> [!TIP]
+> docker cp ./sample.war tomcat-server:/usr/local/tomcat/webapps/
+
+Copiamos el directorio .war al contenedor de tomcat.
+```bash
+Successfully copied 7.17kB to tomcat-server:/usr/local/tomcat/webapps/
+```
+---
+> [!CAUTION]
+> Esta ruta me da 404 (revisar)
+> 
+> http://localhost:9000/sample
+```bash
+```
+---
+> [!TIP]
+> docker logs -f tomcat-server
+
+Ver historial de peticiones de la conexión
+```bash
+26-Nov-2024 23:21:38.279 INFO [Catalina-utility-2] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/usr/local/tomcat/webapps/.git] has finished in [15] ms
+```
+---
+> [!TIP]
+> docker inspect tomcat-server
+
+Obtener información del contenedor 
+> IP: 172.17.0.2 
+
+> Puerto: 8080
