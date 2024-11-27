@@ -90,5 +90,31 @@ CONTAINER ID   IMAGE                        COMMAND                  CREATED    
 ee57db95ac6d   dbeaver/cloudbeaver:latest   "./run-server.sh"        About a minute ago   Up About a minute         0.0.0.0:8978->8978/tcp, :::8978->8978/tcp     cloudbeaver
 ```
 
-> [!WARNING]
-> solucionar errores en localhost:8978
+
+Por último, accedemos a localhost:8978 (que es dónde se encuentra nuestro gestor de bbdd):
+-  Realizamos la configuración inicial
+-  Nos logeamos
+-  Vamos al **+ -> Find Database** y ponemos la ip del contenedor de mariadb que se encuentra en **docker inspect mariadb-container** (172.17.0.2)
+-  Seleccionamos el driver de **MariaDB** y ponemos los datos que declaramos en el **docker run** (ddbb: exampledb, p: 3306, user: root, password: admin) y le damos a test
+> [!CAUTION]
+> En el paso anterior me da el siguiente error 
+```
+Error connecting to database:
+Connection failed:
+Socket fail to connect to host:address=(host=localhost)(port=3306)(type=primary). Connection refused
+```
+- En caso de que no de error (no es mi caso) creamos la conexión con el la base de datos del contenedor de mariadb
+
+> [!TIP]
+> docker stop mariadb-container
+>
+> docker stop cloudbeaver
+
+Paramos ambos contenedores antes de eliminarlos
+
+> [!TIP]
+> docker rm mariadb-container
+>
+> docker rm cloudbeaver
+
+Eliminamos los contenedores
