@@ -126,3 +126,55 @@ Accedemos al cliente mongo express
 <img src="../img/users.png">
 <img src="../img/create-user-mongo-express.png">
 <img src="../img/create-user-success.png">
+---
+
+> [!TIP]
+> docker network inspect mongodb-network
+
+Muestra información acerca de la red seleccionada
+```bash
+[
+    {
+        "Name": "mongodb-network",
+        "Id": "1dcbe7c3aa65ab0c03e9f374e5a5e3d70a67b459a502cc42093ad1d6c281bf81",
+        "Created": "2024-12-02T19:59:23.301418003Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+```
+---
+> [!TIP]
+> docker exec -it mongodb-container mongosh -u admin -p admin123
+
+> [!WARNING]
+> MongoDB 5.0+ requires a CPU with AVX support, and your current system does not appear to have that! 
+---
+> [!TIP]
+> docker stop mongodb-container
+>
+> docker rm mongodb-container
+```bash
+mongodb-container
+```
