@@ -1,4 +1,16 @@
-## Tarea 6
+# Tarea 6
+
+## Indice
+- [Tarea 6](#tarea-6)
+  - [Indice](#indice)
+    - [Crear una red personalizada](#crear-una-red-personalizada)
+    - [Crear un volumen para MongoDB](#crear-un-volumen-para-mongodb)
+    - [Levantar el contenedor MongoDB](#levantar-el-contenedor-mongodb)
+    - [Levantar el Contenedor Mongo Express](#levantar-el-contenedor-mongo-express)
+    - [Verificar los contenedores activos](#verificar-los-contenedores-activos)
+    - [Vemos los logs del contenedor de mongo express](#vemos-los-logs-del-contenedor-de-mongo-express)
+    - [Detener y Eliminar el contenedor](#detener-y-eliminar-el-contenedor)
+---
 > [!TIP]
 > docker network ls
 
@@ -113,21 +125,30 @@ e505867f0403   mongo-express:latest   "/sbin/tini -- /dock…"   2 minutes ago  
 ```bash
 Mongo Express server listening at http://0.0.0.0:8081
 ```
-
-> localhost:8081
-
-Accedemos al cliente mongo express
-- Usuario: admin
-- Contraseña: pass
-
-<img src="../img/localhost:8081.png">
-<img src="../img/mongo-express.png">
-<img src="../img/testdb.png">
-<img src="../img/users.png">
-<img src="../img/create-user-mongo-express.png">
-<img src="../img/create-user-success.png">
 ---
+> localhost:8081
+> - contraseña: pass
+> - usuario: admin
 
+Accedemos al cliente mongo express 
+<img src="../img/localhost:8081.png">
+
+Creamos una nueva base de datos llamada testdb
+<img src="../img/mongo-express.png">
+
+Le damos a View para editar la tabla
+<img src="../img/testdb.png">
+
+Le damos a new Document
+<img src="../img/users.png">
+
+Escribimos el json del usuario y le damos a guardar 
+<img src="../img/create-user-mongo-express.png">
+
+Comprobamos que se haya añadido
+<img src="../img/create-user-success.png">
+
+---
 > [!TIP]
 > docker network inspect mongodb-network
 
@@ -168,8 +189,88 @@ Muestra información acerca de la red seleccionada
 > [!TIP]
 > docker exec -it mongodb-container mongosh -u admin -p admin123
 
-> [!WARNING]
-> MongoDB 5.0+ requires a CPU with AVX support, and your current system does not appear to have that! 
+Ejecutamos el contenedor desde la terminal.
+```bash
+Current Mongosh Log ID: 674f220a7f7cd621e5c1c18b
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.3
+Using MongoDB:          8.0.3
+Using Mongosh:          2.3.3
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2024-12-03T15:21:33.236+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-12-03T15:21:33.727+00:00: Soft rlimits for open file descriptors too low
+   2024-12-03T15:21:33.727+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2024-12-03T15:21:33.727+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2024-12-03T15:21:33.727+00:00: We suggest setting the contents of sysfsFile to 0.
+   2024-12-03T15:21:33.727+00:00: Your system has glibc support for rseq built in, which is not yet supported by tcmalloc-google and has critical performance implications. Please set the environment variable GLIBC_TUNABLES=glibc.pthread.rseq=0
+------
+```
+> [!TIP]
+> use testdb
+
+Nos conectamos a la base de datos
+```bash
+switched to db testdb
+```
+---
+> [!TIP]
+> show collections
+
+Muestra todas las tablas
+```bash
+delete_me
+users
+```
+---
+> [!TIP]
+> db.users.insertOne({
+> 
+> name: "Pepe",
+> 
+> email: "quiero-ser-como-pepe@example.com",
+> 
+> age: 65
+> 
+> })
+
+Insertamos un usuario en la tabla db.users
+```bash
+{
+  acknowledged: true,
+  insertedId: ObjectId('674f26287f7cd621e5c1c18c')
+}
+```
+---
+> [!TIP]
+> db.users.find()
+
+Muestra todos los usuarios de la tabla 
+(Se puede buscar por id introduciendolo en el find())
+> **exit** para salir de la terminal
+```bash
+[
+  {
+    _id: ObjectId('674e187e967158b37afd24f7'),
+    name: 'John Doe',
+    email: 'john@example.com',
+    age: 30
+  },
+  {
+    _id: ObjectId('674f26287f7cd621e5c1c18c'),
+    name: 'Pepe',
+    email: 'quiero-ser-como-pepe@example.com',
+    age: 65
+  }
+]
+```
+### Detener y Eliminar el contenedor
 ---
 > [!TIP]
 > docker stop mongodb-container
