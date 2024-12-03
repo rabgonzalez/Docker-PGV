@@ -9,6 +9,8 @@
     - [Levantar el Contenedor Mongo Express](#levantar-el-contenedor-mongo-express)
     - [Verificar los contenedores activos](#verificar-los-contenedores-activos)
     - [Vemos los logs del contenedor de mongo express](#vemos-los-logs-del-contenedor-de-mongo-express)
+    - [Creamos un usuario por medio de la interfaz de MongoDB Express](#creamos-un-usuario-por-medio-de-la-interfaz-de-mongodb-express)
+    - [Creamos un usuario en el contenedor de mongoDB por medio de la terminal](#creamos-un-usuario-en-el-contenedor-de-mongodb-por-medio-de-la-terminal)
     - [Detener y Eliminar el contenedor](#detener-y-eliminar-el-contenedor)
 ---
 > [!TIP]
@@ -125,6 +127,7 @@ e505867f0403   mongo-express:latest   "/sbin/tini -- /dock…"   2 minutes ago  
 ```bash
 Mongo Express server listening at http://0.0.0.0:8081
 ```
+### Creamos un usuario por medio de la interfaz de MongoDB Express
 ---
 > localhost:8081
 > - contraseña: pass
@@ -142,7 +145,7 @@ Le damos a View para editar la tabla
 Le damos a new Document
 <img src="../img/users.png">
 
-Escribimos el json del usuario y le damos a guardar 
+Escribimos el json del usuario y le damos a guardar
 <img src="../img/create-user-mongo-express.png">
 
 Comprobamos que se haya añadido
@@ -185,7 +188,7 @@ Muestra información acerca de la red seleccionada
     }
 ]
 ```
----
+### Creamos un usuario en el contenedor de mongoDB por medio de la terminal
 > [!TIP]
 > docker exec -it mongodb-container mongosh -u admin -p admin123
 
