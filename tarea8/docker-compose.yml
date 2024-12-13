@@ -1,0 +1,98 @@
+version: '3.9'
+services:
+  # MARIADB
+  mariadb:
+    image: mariadb:11.1.2
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: example-mariadb
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - tarea8_network
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:23.3.0
+    container_name: cloudbeaver
+    ports:
+      - "8978:8978"
+    networks:
+      - tarea8_network
+    depends_on:
+      - mariadb
+  
+  # MONGO
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: example-mongodb
+    volumes:
+      - mongodb_volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - tarea8_network
+  
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_BASICAUTH: "false"
+    ports:
+      - "8081:8080"
+    networks:
+      - tarea8_network
+    depends_on:
+      - mongodb
+
+  # TOMCAT
+  tomcat1:
+    image: tomcat:10.1.9-jdk17
+    container_name: tomcat1
+    volumes:
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
+    ports:
+      - "8090:8081"
+    networks:
+      - tarea8_network
+      
+  tomcat2:
+    image: tomcat:10.1.9-jdk17
+    container_name: tomcat2
+    volumes:
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
+    ports:
+      - "8091:8082"
+    networks:
+      - tarea8_network
+
+  # NGINX
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "81:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - tarea8_network
+    depends_on:
+      - cloudbeaver
+      - mongo-express
+      - tomcat1
+      - tomcat2
+
+volumes:
+  mariadb_volume:
+  mongodb_volume:
+networks:
+  tarea8_network:
