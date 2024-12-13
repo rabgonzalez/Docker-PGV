@@ -26,7 +26,7 @@ services:
   
   # MONGO
   mongodb:
-    image: mongo:6.0
+    image: mongo:latest
     container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -39,7 +39,7 @@ services:
       - tarea8_network
   
   mongo-express:
-    image: mongo-express:1.0.2
+    image: mongo-express:latest
     container_name: mongo-express
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
