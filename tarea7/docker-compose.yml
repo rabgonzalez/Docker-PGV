@@ -19,7 +19,7 @@ services:
     ports:
       - "8090:8080"
     volumes:
-      - ./assets/sample.war:/usr/local/tomcat/webapps/sample.war
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
     networks:
       - mariadb_network
 
